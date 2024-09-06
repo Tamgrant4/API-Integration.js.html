@@ -1,0 +1,125 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokeAPI Explorer</title>
+  <link rel="stylesheet" 
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">PokeAPI Explorer</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" 
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" >Search Pokémon</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to PokeAPI Explorer</h1>
+    <p class="lead">Discover the world of Pokémon using the PokeAPI.</p>
+    <a class="btn btn-primary btn-lg"
+
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    
+    .jumbotron {
+      background-color: #f0f8ff;
+    }
+    
+    .navbar-brand {
+      font-size: 1.5em;
+      color: #ffcc00;
+    }
+    
+    .btn-primary {
+      background-color: #ffcc00;
+      border-color: #ffcc00;
+    }
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Search</title>
+  <link rel="stylesheet"
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">PokeAPI Explorer</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href=>Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href= Search Pokémon</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2>Search for a Pokémon</h2>
+    <form id="pokemon-search-form">
+      <div class="form-group">
+        <input type="text" class="form-control" id="pokemon-input" placeholder="Enter Pokémon name or ID">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div id="pokemon-details" class="mt-4" style="display: none;">
+      <div class="card">
+        <img id="pokemon-image" class="card-img-top" alt="Pokémon Image">
+        <div class="card-body">
+          <h5 class="card-title" id="pokemon-name"></h5>
+          <p class="card-text">Abilities: <span id="pokemon-abilities"></span></p>
+          <p class="card-text">Types: <span id="pokemon-types"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  document.getElementById('pokemon-search-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const pokemon = document.getElementById('pokemon-input').value.toLowerCase();
+    const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+    
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Pokémon not found');
+      
+      const data = await response.json();
+      displayPokemonDetails(data);
+    } catch (error) {
+      console.error('Error fetching Pokémon data:', error);
+      alert('Pokémon not found. Please try again.');
+    }
+  });
+  
+  function displayPokemonDetails(pokemon) {
+    document.getElementById('pokemon-image').src = pokemon.sprites.front_default;
+    document.getElementById('pokemon-name').innerText = pokemon.name;
+    
+    const abilities = pokemon.abilities.map(ability => ability.ability.name).join(', ');
+    document.getElementById('pokemon-abilities').innerText = abilities;
+  
+    const types = pokemon.types.map(type => type.type.name).join(', ');
+    document.getElementById('pokemon-types').innerText = types;
+  
+    document.getElementById('pokemon-details').style.display = 'block';
+  }
+  
+     
+
+
+
